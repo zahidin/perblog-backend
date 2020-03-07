@@ -36,7 +36,7 @@ export default {
             message,
         });
     },
-    badRequest(message: string, res: Response, flag: string): Response {
+    badRequest(message: string, res: Response, flag: string | []): Response {
         return res.status(400).json({
             success: false,
             flag,
