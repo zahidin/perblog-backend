@@ -12,7 +12,7 @@ export default class PostRepository implements IRepository<TypePost> {
         this.postRepository = getManager();
     }
 
-    create(data: TypePost): Promise<TypePost> {
+    public create(data: TypePost): Promise<TypePost> {
         return new Promise(async (resolve, reject) => {
             try {
                 const result = await this.postRepository.save(this.entity, data);
@@ -23,58 +23,47 @@ export default class PostRepository implements IRepository<TypePost> {
         });
     }
 
-    // find(param?: {}): Promise<TypePost[]> {
-    //     return new Promise(async (resolve, reject) => {
-    //         try {
-    //             const result = await this.postRepository.find(param);
-    //             resolve(result);
-    //         } catch (error) {
-    //             reject(error);
-    //         }
-    //     });
-    // }
+    public find(param?: {}): Promise<TypePost[] | {}> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await this.postRepository.find(this.entity, param);
+                resolve(result);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
 
-    // findOne(condition: TypePost): Promise<TypePost> {
-    //     return new Promise(async (resolve, reject) => {
-    //         try {
-    //             const result = await this.postRepository.findOne(condition);
-    //             resolve(result);
-    //         } catch (error) {
-    //             reject(error);
-    //         }
-    //     });
-    // }
+    public findOne(condition: TypePost): Promise<TypePost | {}> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await this.postRepository.findOne(this.entity, condition);
+                resolve(result);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
 
-    // update(condition: TypePost, data: TypePost): Promise<{ success?: number }> {
-    //     return new Promise(async (resolve, reject) => {
-    //         try {
-    //             const result = await this.postRepository.update(condition, data);
-    //             resolve(result.raw);
-    //         } catch (error) {
-    //             reject(error);
-    //         }
-    //     });
-    // }
+    public update(condition: TypePost, data: TypePost): Promise<{ success?: number }> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await this.postRepository.update(this.entity, condition, data);
+                resolve({ success: 1 });
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
 
-    // updateById(id: string, data: Post): Promise<{ success?: number }> {
-    //     return new Promise(async (resolve, reject) => {
-    //         try {
-    //             const result = await this.postRepository.findOneAndUpdate([id], data);
-    //             resolve(result.value);
-    //         } catch (error) {
-    //             reject(error);
-    //         }
-    //     });
-    // }
-
-    // delete(condition: Post): Promise<{ success?: number }> {
-    //     return new Promise(async (resolve, reject) => {
-    //         try {
-    //             const result = await this.postRepository.delete(condition);
-    //             resolve(result.raw);
-    //         } catch (error) {
-    //             reject(error);
-    //         }
-    //     });
-    // }
+    public delete(condition: string): Promise<{ success?: number }> {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const result = await this.postRepository.delete(this.entity, condition);
+                resolve({ success: 1 });
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
 }

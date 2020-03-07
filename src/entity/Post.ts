@@ -32,6 +32,13 @@ export class Post {
     })
     tags: string;
 
+    @Column({
+        type: 'varchar',
+        width: 100,
+        nullable: false,
+    })
+    slug: string;
+
     @CreateDateColumn()
     public create_at: Date;
 
