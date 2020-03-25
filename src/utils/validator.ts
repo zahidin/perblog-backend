@@ -2,7 +2,6 @@ import { ValidationChain, validationResult } from 'express-validator';
 import { Request, Response, NextFunction, Handler } from 'express';
 
 const errorFormatter = (param: any) => {
-    console.log('errorFormatter -> param', param);
     return `${param.location}[${param.param}]: ${param.msg}`;
 };
 

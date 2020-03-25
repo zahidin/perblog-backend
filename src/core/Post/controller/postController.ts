@@ -1,31 +1,11 @@
 import { Request, Response } from 'express';
-import response from '../../../utils/response';
-import { postService } from '../service/';
-import validator from '../../../utils/validator';
-import { body, param } from 'express-validator';
-import { string, integer, required } from '../../../constant/errorMessageValidation';
+import response from '@/utils/response';
+import { postService } from '@/core/Post/service';
+import validator from '@/utils/validator';
+import { validationCreate, validationShow, validationDelete } from '@/core/Post/validation';
 
 export default class PostController {
-    @validator([
-        body('title')
-            .isString()
-            .withMessage(string)
-            .exists()
-            .withMessage(required),
-        body('date')
-            .isString()
-            .withMessage(string)
-            .exists()
-            .withMessage(required),
-        body('content')
-            .isString()
-            .withMessage(string)
-            .exists()
-            .withMessage(required),
-        body('tags')
-            .isString()
-            .withMessage(string),
-    ])
+    @validator(validationCreate)
     public async create(req: Request, res: Response) {
         try {
             const result = await postService.create(req.body);
@@ -44,11 +24,7 @@ export default class PostController {
         }
     }
 
-    @validator([
-        param('slug')
-            .exists()
-            .withMessage(required),
-    ])
+    @validator(validationShow)
     public async show(req: Request, res: Response): Promise<Response> {
         try {
             const result = await postService.show({ slug: req.params.slug });
@@ -58,29 +34,7 @@ export default class PostController {
         }
     }
 
-    @validator([
-        param('slug')
-            .exists()
-            .withMessage(required),
-        body('title')
-            .isString()
-            .withMessage(string)
-            .exists()
-            .withMessage(required),
-        body('date')
-            .isString()
-            .withMessage(string)
-            .exists()
-            .withMessage(required),
-        body('content')
-            .isString()
-            .withMessage(string)
-            .exists()
-            .withMessage(required),
-        body('tags')
-            .isString()
-            .withMessage(string),
-    ])
+    @validator(validationCreate)
     public async update(req: Request, res: Response): Promise<Response> {
         try {
             const result = await postService.update({ slug: req.params.slug }, req.body);
@@ -90,11 +44,7 @@ export default class PostController {
         }
     }
 
-    @validator([
-        param('id')
-            .exists()
-            .withMessage(required),
-    ])
+    @validator(validationDelete)
     public async delete(req: Request, res: Response): Promise<Response> {
         try {
             const result = await postService.delete(req.params.id);

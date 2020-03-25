@@ -6,11 +6,12 @@ import parser from 'body-parser';
 import compression from 'compression';
 import routes from '../routes';
 import { createConnection, Connection } from 'typeorm';
+import ConfigApp from '@/config/app';
 
 export class Server {
     private httpServer: HTTPServer;
     private app: Application;
-    private readonly PORT = 5000;
+    private readonly PORT = ConfigApp.APP_PORT || 5000;
 
     constructor() {
         this.initialize();
@@ -42,7 +43,7 @@ export class Server {
         const connection: Connection = await createConnection();
     }
 
-    public listen(callback: (port: number) => void): void {
+    public listen(callback: (port: number | string) => void): void {
         this.httpServer.listen(this.PORT, () => {
             callback(this.PORT);
         });

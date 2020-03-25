@@ -1,23 +1,28 @@
 {
-  "compilerOptions": {
-    "lib": ["es5", "es6"],
-    "target": "es6",
-    "allowJs": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "outDir": "./dist",
-    "removeComments": true,
-    "importHelpers": true,
-    "strict": true,
-    "strictPropertyInitialization": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "typeRoots": ["node_modules/@types"],
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "sourceMap": true
-  },
-  "include": ["./src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+    "compilerOptions": {
+        "lib": ["es5", "es6"],
+        "target": "es6",
+        "allowJs": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "outDir": "./dist",
+        "removeComments": true,
+        "importHelpers": true,
+        "strict": true,
+        "strictPropertyInitialization": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "typeRoots": ["node_modules/@types"],
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "sourceMap": true,
+        "baseUrl": "./src",
+        "paths": {
+            "@": ["./"],
+            "@/*": ["./*"]
+        }
+    },
+    "include": ["./src/**/*"],
+    "exclude": ["node_modules", "**/*.spec.ts"]
 }
