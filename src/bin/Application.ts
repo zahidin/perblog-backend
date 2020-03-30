@@ -4,7 +4,7 @@ import responseTime from 'response-time';
 import { createServer, Server as HTTPServer } from 'http';
 import parser from 'body-parser';
 import compression from 'compression';
-import routes from '../routes';
+import routes from '@/routes';
 import { createConnection, Connection } from 'typeorm';
 import ConfigApp from '@/config/app';
 
@@ -18,12 +18,13 @@ export class Server {
     }
 
     private initialize(): void {
+        this.configureDatabase();
+
         this.app = express();
         this.httpServer = createServer(this.app);
 
         this.configureApp();
         this.configureRoutes();
-        this.configureDatabase();
     }
 
     private configureApp(): void {

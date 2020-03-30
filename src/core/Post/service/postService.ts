@@ -1,6 +1,7 @@
-import IService from '../../../types/service';
-import { Post } from '../../../types/post';
-import PostRepository from '../repository/postRepository';
+import IService from '@/types/service';
+import { Post } from '@/types/post';
+import PostRepository from '@/core/Post/repository/postRepository';
+import slugify from 'slugify';
 
 export default class PostService implements IService<Post> {
     public postRepository: PostRepository;
@@ -9,19 +10,12 @@ export default class PostService implements IService<Post> {
         this.postRepository = postRepository;
     }
 
-    public create(data: Post): Promise<Post> {
+    public create(data: Post): Promise<Post | Post[]> {
         return new Promise(async (resolve, reject) => {
             try {
-                const setSlug =
-                    data.title &&
-                    data.title
-                        .trim()
-                        .replace(/\s/g, '-')
-                        .toLowerCase();
-
                 const proccessData = {
                     ...data,
-                    slug: data.slug !== '' ? data.slug : setSlug,
+                    slug: slugify(data.title?.toLowerCase() as string), // same as slugify(<string> data.title),
                 };
                 const result = await this.postRepository.create(proccessData);
                 resolve(result);
