@@ -6,12 +6,12 @@ import { validationCreate, validationShow, validationDelete } from '@/core/Post/
 
 export default class PostController {
     @validator(validationCreate)
-    public async create(req: Request, res: Response) {
+    public async create(req: Request, res: Response): Promise<Response> {
         try {
             const result = await postService.create(req.body);
             return response.success('Success Add Post', res, result);
         } catch (error) {
-            return response.error('Error Add Post', res, error);
+            return response.error(error.message, res, error.flag);
         }
     }
 
@@ -20,7 +20,7 @@ export default class PostController {
             const result = await postService.show();
             return response.success('Success Show Post', res, result);
         } catch (error) {
-            return response.error('Error Show Post', res, error);
+            return response.error(error.message, res, error.flag);
         }
     }
 
@@ -30,7 +30,7 @@ export default class PostController {
             const result = await postService.show({ slug: req.params.slug });
             return response.success('Success Show Post', res, result);
         } catch (error) {
-            return response.error('Error Show Post', res, error);
+            return response.error(error.message, res, error.flag);
         }
     }
 
@@ -40,7 +40,7 @@ export default class PostController {
             const result = await postService.update({ slug: req.params.slug }, req.body);
             return response.success('Success Update Post', res, result);
         } catch (error) {
-            return response.error('Error Show Post', res, error);
+            return response.error(error.message, res, error.flag);
         }
     }
 
@@ -50,7 +50,7 @@ export default class PostController {
             const result = await postService.delete(req.params.id);
             return response.success('Success Delete Post', res, result);
         } catch (error) {
-            return response.error('Error Show Post', res, error);
+            return response.error(error.message, res, error.flag);
         }
     }
 }

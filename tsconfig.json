@@ -19,7 +19,6 @@
         "sourceMap": true,
         "baseUrl": "./src",
         "paths": {
-            "@": ["./"],
             "@/*": ["./*"]
         }
     },

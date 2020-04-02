@@ -7,6 +7,8 @@ import compression from 'compression';
 import routes from '@/routes';
 import { createConnection, Connection } from 'typeorm';
 import ConfigApp from '@/config/app';
+import cors from 'cors';
+import helmet from 'helmet';
 
 export class Server {
     private httpServer: HTTPServer;
@@ -28,6 +30,8 @@ export class Server {
     }
 
     private configureApp(): void {
+        this.app.use(cors());
+        this.app.use(helmet());
         this.app.use(responseTime());
         this.app.use(parser.json());
         this.app.use(compression());
@@ -44,7 +48,7 @@ export class Server {
         const connection: Connection = await createConnection();
     }
 
-    public listen(callback: (port: number | string) => void): void {
+    public listen(callback: (port: number) => void): void {
         this.httpServer.listen(this.PORT, () => {
             callback(this.PORT);
         });
