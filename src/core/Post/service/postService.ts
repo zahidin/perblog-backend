@@ -2,6 +2,7 @@ import IService from '@/types/service';
 import { Post } from '@/types/post';
 import PostRepository from '@/core/Post/repository/postRepository';
 import slugify from 'slugify';
+import { FAILED } from '@/constant/flag';
 
 export default class PostService implements IService<Post> {
     public postRepository: PostRepository;
@@ -20,7 +21,7 @@ export default class PostService implements IService<Post> {
                 const result = await this.postRepository.create(proccessData);
                 resolve(result);
             } catch (error) {
-                reject(error);
+                reject({ flag: FAILED.flag, message: error.message });
             }
         });
     }
@@ -38,7 +39,7 @@ export default class PostService implements IService<Post> {
                 const result = await this.postRepository.delete(condition);
                 resolve(result);
             } catch (error) {
-                reject(error);
+                reject({ flag: FAILED.flag, message: error.message });
             }
         });
     }
@@ -49,7 +50,7 @@ export default class PostService implements IService<Post> {
                 const result = await this.postRepository.update(condition, data);
                 resolve(result);
             } catch (error) {
-                reject(error);
+                reject({ flag: FAILED.flag, message: error.message });
             }
         });
     }

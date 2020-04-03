@@ -2,6 +2,7 @@ import AuthRepository from '../repository/authRepository';
 import { User } from '@/types/user';
 import { generateToken, generateRefreshToken } from '@/utils/jwt';
 import { checkingPassword, encryptPassword } from '@/utils/bcrypt';
+import { WRONG_AUTHENTICATION, FAILED } from '@/constant/flag';
 
 export default class AuthService {
     public authRepository: AuthRepository;
@@ -31,10 +32,10 @@ export default class AuthService {
                     );
                     resolve({ token, refreshToken });
                 } else {
-                    reject({ flag: 300, message: 'username or password is wrong ' });
+                    reject({ flag: WRONG_AUTHENTICATION.flag, message: WRONG_AUTHENTICATION.message });
                 }
             } catch (error) {
-                reject(error);
+                reject({ flag: WRONG_AUTHENTICATION.flag, message: WRONG_AUTHENTICATION.message });
             }
         });
     }
@@ -49,7 +50,7 @@ export default class AuthService {
                 const result = await this.authRepository.create(processData);
                 resolve(result);
             } catch (error) {
-                reject(error);
+                reject({ flag: FAILED.flag, message: error.message });
             }
         });
     }

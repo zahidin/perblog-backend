@@ -1,6 +1,6 @@
 import IRepository from '@/types/repository';
 import { getManager, EntityManager } from 'typeorm';
-
+import { FAILED } from '@/constant/flag';
 export default class CrudRepository<T> implements IRepository<T> {
     postRepository: EntityManager;
     entity: any;
@@ -15,7 +15,7 @@ export default class CrudRepository<T> implements IRepository<T> {
                 const result = await this.postRepository.save<T>(this.entity, data);
                 resolve(result);
             } catch (error) {
-                reject({ flag: error.code, message: error.errmsg });
+                reject({ flag: FAILED.flag, message: error.errmsg });
             }
         });
     }
@@ -26,7 +26,7 @@ export default class CrudRepository<T> implements IRepository<T> {
                 const result = await this.postRepository.find<T | T[]>(this.entity, param);
                 resolve(result);
             } catch (error) {
-                reject({ flag: error.code, message: error.errmsg });
+                reject({ flag: FAILED.flag, message: error.errmsg });
             }
         });
     }
@@ -37,7 +37,7 @@ export default class CrudRepository<T> implements IRepository<T> {
                 const result = await this.postRepository.findOne<T>(this.entity, condition);
                 resolve(result);
             } catch (error) {
-                reject({ flag: error.code, message: error.errmsg });
+                reject({ flag: FAILED.flag, message: error.errmsg });
             }
         });
     }
@@ -48,7 +48,7 @@ export default class CrudRepository<T> implements IRepository<T> {
                 const result = await this.postRepository.update(this.entity, condition, data);
                 resolve({ success: 1 });
             } catch (error) {
-                reject({ flag: error.code, message: error.errmsg });
+                reject({ flag: FAILED.flag, message: error.errmsg });
             }
         });
     }
@@ -59,7 +59,7 @@ export default class CrudRepository<T> implements IRepository<T> {
                 const result = await this.postRepository.delete(this.entity, condition);
                 resolve({ success: 1 });
             } catch (error) {
-                reject({ flag: error.code, message: error.errmsg });
+                reject({ flag: FAILED.flag, message: error.errmsg });
             }
         });
     }

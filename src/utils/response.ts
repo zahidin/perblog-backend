@@ -8,7 +8,7 @@ export default {
             message,
         });
     },
-    success(message: string, res: Response, data?: any): Response {
+    success(message: string, res: Response, data?: {}): Response {
         return res.status(200).json({
             success: Boolean(data),
             message,
