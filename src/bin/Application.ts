@@ -5,7 +5,7 @@ import { createServer, Server as HTTPServer } from 'http';
 import parser from 'body-parser';
 import compression from 'compression';
 import routes from '@/routes';
-import { createConnection, Connection } from 'typeorm';
+import { createConnection } from 'typeorm';
 import ConfigApp from '@/config/app';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -44,8 +44,8 @@ export class Server {
         this.app.use('/api/v1', routes);
     }
 
-    private async configureDatabase(): Promise<any> {
-        const connection: Connection = await createConnection();
+    private async configureDatabase(): Promise<void> {
+        await createConnection();
     }
 
     public listen(callback: (port: number) => void): void {

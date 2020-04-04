@@ -1,8 +1,8 @@
 import AuthRepository from '../repository/authRepository';
 import { User } from '@/types/user';
-import { generateToken, generateRefreshToken } from '@/utils/jwt';
+import { generateToken, generateRefreshToken, checkJwt } from '@/utils/jwt';
 import { checkingPassword, encryptPassword } from '@/utils/bcrypt';
-import { WRONG_AUTHENTICATION, FAILED } from '@/constant/flag';
+import { WRONG_AUTHENTICATION, FAILED, NOT_FOUND } from '@/constant/flag';
 
 export default class AuthService {
     public authRepository: AuthRepository;
@@ -25,7 +25,7 @@ export default class AuthService {
                 if (getUserInfo && checkPassword) {
                     delete getUserInfo.token;
                     delete getUserInfo.password;
-                    const token: string = generateToken({ getUserInfo });
+                    const token: string = generateToken({ ...getUserInfo });
                     await this.authRepository.update(
                         { username: getUserInfo.username },
                         { token, revokeToken: 0, refreshToken },
@@ -35,11 +35,35 @@ export default class AuthService {
                     reject({ flag: WRONG_AUTHENTICATION.flag, message: WRONG_AUTHENTICATION.message });
                 }
             } catch (error) {
-                reject({ flag: WRONG_AUTHENTICATION.flag, message: WRONG_AUTHENTICATION.message });
+                reject({ flag: FAILED.flag, message: error.message });
             }
         });
     }
 
+    public logout(token: string): Promise<{} | string> {
+        return new Promise(async (resolve, reject) => {
+            const userToken: string = token?.split(' ')[1] as string;
+            try {
+                const { username } = checkJwt(userToken);
+                const dataUserDB: User = await this.authRepository.findOne({
+                    username: username,
+                    revokeToken: 0,
+                });
+
+                if (dataUserDB) {
+                    const updateUser = await this.authRepository.update(
+                        { username: dataUserDB.username },
+                        { revokeToken: 1 },
+                    );
+                    resolve(updateUser);
+                } else {
+                    reject({ flag: NOT_FOUND.flag, message: NOT_FOUND.message });
+                }
+            } catch (error) {
+                reject({ flag: FAILED.flag, message: error.message });
+            }
+        });
+    }
     public register(data: User): Promise<User | User[]> {
         return new Promise(async (resolve, reject) => {
             try {
