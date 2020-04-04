@@ -2,7 +2,7 @@ import { authService } from '@/core/Auth/service';
 import { Request, Response } from 'express';
 import response from '@/utils/response';
 import validator from '@/utils/validator';
-import { validationRegister, validationLogin } from '@/core/Auth/validation';
+import { validationRegister, validationLogin, validationLogout } from '@/core/Auth/validation';
 import { SUCCESS } from '@/constant/flag';
 export default class AuthController {
     @validator(validationLogin)
@@ -24,6 +24,7 @@ export default class AuthController {
         }
     }
 
+    @validator(validationLogout)
     public async logout(req: Request, res: Response): Promise<Response> {
         try {
             const result = await authService.logout(req.headers.authorization as string);

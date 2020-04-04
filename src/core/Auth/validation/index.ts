@@ -1,5 +1,13 @@
-import { body } from 'express-validator';
+import { body, header } from 'express-validator';
 import { string, required } from '@/constant/errorMessageValidation';
+
+export const validationLogout = [
+    header('Authorization')
+        .isString()
+        .withMessage(string)
+        .exists()
+        .withMessage(required),
+];
 
 export const validationLogin = [
     body('username')
