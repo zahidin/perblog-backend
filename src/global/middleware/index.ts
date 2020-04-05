@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import response from '@/utils/response';
+import { ACCESS_DENIED } from '@/constant/flag';
 import { checkJwt, generateToken } from '@/utils/jwt';
 
 export default class Middleware {
@@ -10,7 +11,7 @@ export default class Middleware {
             jwtPayload = checkJwt(token);
             res.locals.jwtPayload = jwtPayload;
         } catch (error) {
-            return response.unauthorized('Access Denied', res, '');
+            return response.unauthorized(ACCESS_DENIED.message, res, ACCESS_DENIED.flag);
         }
 
         // const newToken = generateToken(jwtPayload);

@@ -9,11 +9,14 @@ import { createConnection } from 'typeorm';
 import ConfigApp from '@/config/app';
 import cors from 'cors';
 import helmet from 'helmet';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from '@/docs';
 
 export class Server {
     private httpServer: HTTPServer;
     private app: Application;
     private readonly PORT = ConfigApp.APP_PORT || 5000;
+    private readonly MOODE = ConfigApp.APP_MODE || '';
 
     constructor() {
         this.initialize();
@@ -27,6 +30,7 @@ export class Server {
 
         this.configureApp();
         this.configureRoutes();
+        this.configureSwagger();
     }
 
     private configureApp(): void {
@@ -42,6 +46,11 @@ export class Server {
             res.status(200).json({ success: true, status: 'UP !!!' });
         });
         this.app.use('/api/v1', routes);
+    }
+
+    private configureSwagger(): void {
+        if (this.MOODE === 'development')
+            this.app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, { explorer: true }));
     }
 
     private async configureDatabase(): Promise<void> {

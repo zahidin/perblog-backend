@@ -17,20 +17,24 @@ export default class AuthService {
                 const refreshToken = generateRefreshToken();
                 const getUserInfo: User = await this.authRepository.findOne({ username: data.username });
 
-                const checkPassword: boolean = checkingPassword(
-                    data.password as string,
-                    getUserInfo.password as string,
-                );
-
-                if (getUserInfo && checkPassword) {
-                    delete getUserInfo.token;
-                    delete getUserInfo.password;
-                    const token: string = generateToken({ ...getUserInfo });
-                    await this.authRepository.update(
-                        { username: getUserInfo.username },
-                        { token, revokeToken: 0, refreshToken },
+                if (getUserInfo) {
+                    const checkPassword: boolean = checkingPassword(
+                        data.password as string,
+                        getUserInfo.password as string,
                     );
-                    resolve({ token, refreshToken });
+
+                    if (checkPassword) {
+                        delete getUserInfo.token;
+                        delete getUserInfo.password;
+                        const token: string = generateToken({ ...getUserInfo });
+                        await this.authRepository.update(
+                            { username: getUserInfo.username },
+                            { token, revokeToken: 0, refreshToken },
+                        );
+                        resolve({ token, refreshToken });
+                    } else {
+                        reject({ flag: WRONG_AUTHENTICATION.flag, message: WRONG_AUTHENTICATION.message });
+                    }
                 } else {
                     reject({ flag: WRONG_AUTHENTICATION.flag, message: WRONG_AUTHENTICATION.message });
                 }

@@ -40,8 +40,8 @@ export class Post {
     slug: string;
 
     @CreateDateColumn()
-    public create_at: Date;
+    public createAt: Date;
 
     @UpdateDateColumn()
-    public update_at: Date;
+    public updateAt: Date;
 }
