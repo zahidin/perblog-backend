@@ -1,5 +1,5 @@
 import { Entity, ObjectIdColumn, ObjectID, Column, Unique } from 'typeorm';
-
+import { User as TypeUser } from '@/types/user';
 @Entity()
 @Unique(['username'])
 export class User {
@@ -53,4 +53,13 @@ export class User {
         nullable: false,
     })
     revokeToken = 0;
+
+    mockTestUser(): TypeUser {
+        return {
+            firstName: 'Alexander',
+            lastName: 'Kusni',
+            username: 'tester007',
+            password: '123qwe',
+        };
+    }
 }

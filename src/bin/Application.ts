@@ -57,6 +57,10 @@ export class Server {
         await createConnection();
     }
 
+    public get apps(): express.Application {
+        return this.app;
+    }
+
     public listen(callback: (port: number) => void): void {
         this.httpServer.listen(this.PORT, () => {
             callback(this.PORT);

@@ -2,7 +2,7 @@ import AuthRepository from '../repository/authRepository';
 import { User } from '@/types/user';
 import { generateToken, generateRefreshToken, checkJwt } from '@/utils/jwt';
 import { checkingPassword, encryptPassword } from '@/utils/bcrypt';
-import { WRONG_AUTHENTICATION, FAILED, NOT_FOUND } from '@/constant/flag';
+import { WRONG_AUTHENTICATION, NOT_FOUND } from '@/constant/flag';
 
 export default class AuthService {
     public authRepository: AuthRepository;
@@ -39,7 +39,7 @@ export default class AuthService {
                     reject({ flag: WRONG_AUTHENTICATION.flag, message: WRONG_AUTHENTICATION.message });
                 }
             } catch (error) {
-                reject({ flag: FAILED.flag, message: error.message });
+                reject(error);
             }
         });
     }
@@ -64,7 +64,7 @@ export default class AuthService {
                     reject({ flag: NOT_FOUND.flag, message: NOT_FOUND.message });
                 }
             } catch (error) {
-                reject({ flag: FAILED.flag, message: error.message });
+                reject(error);
             }
         });
     }
@@ -78,7 +78,7 @@ export default class AuthService {
                 const result = await this.authRepository.create(processData);
                 resolve(result);
             } catch (error) {
-                reject({ flag: FAILED.flag, message: error.message });
+                reject(error);
             }
         });
     }

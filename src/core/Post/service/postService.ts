@@ -21,7 +21,7 @@ export default class PostService implements IService<Post> {
                 const result = await this.postRepository.create(proccessData);
                 resolve(result);
             } catch (error) {
-                reject({ flag: FAILED.flag, message: error.message });
+                reject(error);
             }
         });
     }
@@ -53,7 +53,7 @@ export default class PostService implements IService<Post> {
                 const result = await this.postRepository.delete(condition);
                 resolve(result);
             } catch (error) {
-                reject({ flag: FAILED.flag, message: error.message });
+                reject(error);
             }
         });
     }
@@ -61,10 +61,14 @@ export default class PostService implements IService<Post> {
     public update(condition: Post, data: Post): Promise<{ success?: number }> {
         return new Promise(async (resolve, reject) => {
             try {
-                const result = await this.postRepository.update(condition, data);
+                const proccessData = {
+                    ...data,
+                    slug: slugify(data.title?.toLowerCase() as string),
+                };
+                const result = await this.postRepository.update(condition, proccessData);
                 resolve(result);
             } catch (error) {
-                reject({ flag: FAILED.flag, message: error.message });
+                reject(error);
             }
         });
     }

@@ -23,5 +23,5 @@
         }
     },
     "include": ["./src/**/*"],
-    "exclude": ["node_modules", "**/*.spec.ts", ".vscode"]
+    "exclude": ["node_modules", "**/*.spec.ts", "__mocks__/**", ".vscode"]
 }
