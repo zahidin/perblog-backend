@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import { User as TypeUser } from '../../types/user';
 import { TestFactory } from '../factory';
 import { describe, it } from 'mocha';
-import { mockTestUser } from '../../__mocks__/user';
+import { mockTestUser } from '../../_mocks_/user';
 
 describe('User admin wants to register', () => {
     const factory: TestFactory = new TestFactory();

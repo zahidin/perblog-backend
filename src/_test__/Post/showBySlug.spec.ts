@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import { Post } from '../../types/post';
 import { TestFactory } from '../factory';
 import { describe, it } from 'mocha';
-import { mockTestPost } from '../../__mocks__/post';
+import { mockTestPost } from '../../_mocks_/post';
 import { NOT_FOUND } from '../../constant/flag';
 
 describe('User admin show post by slug', () => {

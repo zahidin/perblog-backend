@@ -4,20 +4,18 @@ import { User as TypeUser } from '../../types/user';
 import { TestFactory } from '../factory';
 import { describe, it } from 'mocha';
 import { WRONG_AUTHENTICATION, ACCESS_DENIED } from '../../constant/flag';
-import { mockTestPost } from '../../__mocks__/post';
-import { mockTestUser } from '../../__mocks__/user';
+import { mockTestPost } from '../../_mocks_/post';
+import { mockTestUser } from '../../_mocks_/user';
+import { generateToken } from '../../utils/jwt';
 
 describe('User admin create new post', () => {
     const factory: TestFactory = new TestFactory();
 
     const testUser: TypeUser = mockTestUser;
-    delete testUser.firstName;
-    delete testUser.lastName;
 
-    let token: string;
+    const token = `Bearer ${generateToken(testUser)}`;
     const testPost: Post = mockTestPost;
     const URL = `/api/v1/post`;
-    const URL_LOGIN = `/api/v1/authentication/login`;
 
     before(async () => {
         await factory.init();
@@ -28,30 +26,6 @@ describe('User admin create new post', () => {
     });
 
     describe('[Post] POST /POST', () => {
-        it('login with user already exists', done => {
-            factory.app
-                .post(URL_LOGIN)
-                .send(testUser)
-                .set('Accept', 'application/json')
-                .expect('Content-Type', /json/)
-                .expect(200)
-                .end((err, res) => {
-                    try {
-                        const { success } = res.body;
-                        const result = res.body.result;
-
-                        assert(success === true, 'status does not match');
-                        assert.isObject(result, 'user should be an object');
-                        assert.isString(result.token, 'token should be an string');
-                        token = `Bearer ${result.token}`;
-
-                        return done();
-                    } catch (error) {
-                        return done(error);
-                    }
-                });
-        });
-
         it('response with no body data', done => {
             factory.app
                 .post(URL)

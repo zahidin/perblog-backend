@@ -3,7 +3,7 @@ import { User as TypeUser } from '../../types/user';
 import { TestFactory } from '../factory';
 import { describe, it } from 'mocha';
 import { WRONG_AUTHENTICATION } from '../../constant/flag';
-import { mockTestUser, testUserModified } from '../../__mocks__/user';
+import { mockTestUser, testUserModified } from '../../_mocks_/user';
 describe('User admin wants to login', () => {
     const factory: TestFactory = new TestFactory();
     const testUser: TypeUser = mockTestUser;

@@ -4,7 +4,7 @@ import { TestFactory } from '../factory';
 import { describe, it } from 'mocha';
 import { ACCESS_DENIED } from '../../constant/flag';
 import { generateToken } from '../../utils/jwt';
-import { mockTestUser } from '../../__mocks__/user';
+import { mockTestUser } from '../../_mocks_/user';
 
 describe('User admin wants to logout', () => {
     const factory: TestFactory = new TestFactory();
