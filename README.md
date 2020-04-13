@@ -1,5 +1,5 @@
 # Perblog Backend
-
+![License](https://img.shields.io/github/license/zahidin/perblog-backend?style=flat-square)
 This is Api for perblog (personal blog) using express typescript by implementing the best practice structure of api
 
 ## Motivation
