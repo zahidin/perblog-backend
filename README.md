@@ -69,25 +69,25 @@ Here I will explain the structure of this project folder
 |  ├── __mocks__               # Mock Data for unit testing & integration testing
 |  ├── _tests__                # Unit Testing files
 |  ├── bin					   # Folder for a collection of configuration application files
-|     ├── Application.ts	   # Application configuration file
-|  ├── config				   # Configuration application
-|  ├── constant				   # General set of values
+|     ├── Application.ts       # Application configuration file
+|  ├── config	               # Configuration application
+|  ├── constant                # General set of values
 |  ├── core                    # Folder Domain
 |     ├── Post	               # This is the folder for the domain post
-|        ├── controller		   # This is the controller for the post domain
-|        ├── docs		   	   # This is the documentation api for the post domain
-|        ├── repository		   # This is the repository for the post domain, like an insert action to the database
-|        ├── service		   # This is the logic set before executing the action to the database
-|        ├── validation		   # This is the validation parameter for api
-|        ├── index.ts		   # This file to manage routing on the post domain
+|        ├── controller	       # This is the controller for the post domain
+|        ├── docs              # This is the documentation api for the post domain
+|        ├── repository        # This is the repository for the post domain, like an insert action to the database
+|        ├── service           # This is the logic set before executing the action to the database
+|        ├── validation        # This is the validation parameter for api
+|        ├── index.ts          # This file to manage routing on the post domain
 |     ├── ...
 |  ├── docs                    # Parent of all documentation
 |  ├── entity                  # Entity for typeorm
 |  ├── global
 |     ├── middleware	       # For global middleware
 |     ├── repositories	       # For parent of repository
-|  ├── routes            	   # This is to retrieve all routing from the core folder
-|  ├── types            	   # A collection of all types
+|  ├── routes                  # This is to retrieve all routing from the core folder
+|  ├── types                   # A collection of all types
 |  ├── utils                   # Util libs (formats, debugger, validation, etc)
 |  └── index.ts                # App Entry point
 |
