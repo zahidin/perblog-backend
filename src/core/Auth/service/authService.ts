@@ -5,7 +5,7 @@ import { checkingPassword, encryptPassword } from '@/utils/bcrypt';
 import { WRONG_AUTHENTICATION, NOT_FOUND } from '@/constant/flag';
 
 export default class AuthService {
-    public authRepository: AuthRepository;
+    private authRepository: AuthRepository;
 
     constructor(authRepository: AuthRepository) {
         this.authRepository = authRepository;

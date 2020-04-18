@@ -2,10 +2,10 @@ import IService from '@/types/service';
 import { Post } from '@/types/post';
 import PostRepository from '@/core/Post/repository/postRepository';
 import slugify from 'slugify';
-import { FAILED, NOT_FOUND } from '@/constant/flag';
+import { NOT_FOUND } from '@/constant/flag';
 
 export default class PostService implements IService<Post> {
-    public postRepository: PostRepository;
+    private postRepository: PostRepository;
 
     constructor(postRepository: PostRepository) {
         this.postRepository = postRepository;

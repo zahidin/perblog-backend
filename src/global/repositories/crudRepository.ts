@@ -1,9 +1,8 @@
-import IRepository from '@/types/repository';
 import { getManager, EntityManager } from 'typeorm';
 import { FAILED, NOT_FOUND } from '@/constant/flag';
-export default class CrudRepository<T> implements IRepository<T> {
-    entityRepository: EntityManager;
-    entity: any;
+export default class CrudRepository<T> {
+    private entityRepository: EntityManager;
+    public entity: any;
 
     constructor() {
         this.entityRepository = getManager();
